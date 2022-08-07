@@ -28,21 +28,22 @@ public class Server {
         return serverSocket.accept();
     }
 
-    public  void printReceive()  {
-        try{
-            start(8080);
-            InputStream inputStream = accept().getInputStream();
-            byte[] bytes = new byte[1024];
-            int len = -1;
-            while ((len = inputStream.read(bytes)) != -1) {
-                System.out.print(new String(bytes, 0, len, StandardCharsets.UTF_8));
-            }
-            System.out.println();
-        }catch (Exception e){
-            System.out.println("出错还是有客户端断开链接了");
-            e.printStackTrace();
-        }
-    }
+//    public  void printReceive()  {
+//        try{
+//            start(8080);
+//            Socket accept = accept();
+//            InputStream inputStream = accept.getInputStream();
+//            byte[] bytes = new byte[1024];
+//            int len = -1;
+//            while ((len = inputStream.read(bytes)) != -1) {
+//                System.out.print(new String(bytes, 0, len, StandardCharsets.UTF_8));
+//            }
+//            System.out.println();
+//        }catch (Exception e){
+//            System.out.println("出错还是有客户端断开链接了");
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public Integer getPort(){
@@ -50,11 +51,11 @@ public class Server {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("开始");
-        while (true){
-            System.out.println("开始接受消息");
-            new Server().printReceive();
-        }
-    }
+//    public static void main(String[] args) throws IOException {
+//        System.out.println("开始");
+//        while (true){
+//            System.out.println("开始接受消息");
+//            new Server().printReceive();
+//        }
+//    }
 }

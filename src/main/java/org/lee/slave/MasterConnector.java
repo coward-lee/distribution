@@ -13,35 +13,44 @@ public class MasterConnector {
     private final Connection connection;
     private final String ip;
     private final Integer port;
-    private final Dispatcher dispatcher;
+//    private final Dispatcher dispatcher;
 
     public MasterConnector(String ip, Integer port) throws IOException {
         this.ip = ip;
         this.port = port;
         connection = new Connection();
         connection.connection(ip, port);
-        dispatcher = new Dispatcher();
-        listenMaster();
+//        dispatcher = new Dispatcher();
+//        listenMaster();
+//        bootHeartBeat();
     }
-
-    private void listenMaster() {
-        new Thread(() -> dispatch(connection.getInputStream()), getTreadName()).start();
+//
+    public void listenMaster(Runnable runnable) {
+        new Thread(runnable).start();
     }
+//
+//    private void bootHeartBeat(){
+//        new Thread(()-> new HeartBeat(this).doBeat()).start();
+//    }
+//
+//    public void dispatch(InputStream inputStream) {
+//        try {
+//            System.out.println("从节点启动成功："+getTreadName());
+//            byte[] bytes = new byte[10240];
+//            int len = -1;
+//            while ((len = inputStream.read(bytes)) != -1) {
+//                String json = new String(bytes, 0, len, StandardCharsets.UTF_8);
+//                System.out.println(getTreadName() + json);
+//                ReceiveEntity receiveEntity = JsonUtil.parse(json, ReceiveEntity.class);
+//                dispatcher.dispatch(receiveEntity);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public void dispatch(InputStream inputStream) {
-        try {
-            System.out.println("从节点启动成功："+getTreadName());
-            byte[] bytes = new byte[10240];
-            int len = -1;
-            while ((len = inputStream.read(bytes)) != -1) {
-                String json = new String(bytes, 0, len, StandardCharsets.UTF_8);
-                System.out.println(getTreadName() + json);
-                ReceiveEntity receiveEntity = JsonUtil.parse(json, ReceiveEntity.class);
-                dispatcher.dispatch(receiveEntity);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void sendToMaster(String content) throws IOException {
+        connection.write(content);
     }
 
     public String getTreadName() {
@@ -52,15 +61,15 @@ public class MasterConnector {
         return connection;
     }
 
-    public String getIp() {
+    public String getMasterIp() {
         return ip;
     }
 
-    public Integer getPort() {
+    public Integer getMasterPort() {
         return port;
     }
 
-    public Dispatcher getDispatcher() {
-        return dispatcher;
+    public Integer getLocalPort(){
+        return connection.getLocalPort();
     }
 }

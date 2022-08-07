@@ -1,15 +1,17 @@
 package org.lee.net;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 public class Connection {
+    private final Logger log = LoggerFactory.getLogger(Connection.class);
     Socket socket;
     OutputStream outputStream;
     InputStream inputStream;
@@ -31,21 +33,25 @@ public class Connection {
         outputStream.flush();
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Connection connection = new Connection();
-        connection.connection("127.0.0.1:8080");
-        while (true){
-            Thread.sleep(1000 * 10);
-            System.out.println("发送消息");
-            connection.write("节点注册\n");
-        }
-    }
-
     public InputStream getInputStream() {
         return inputStream;
     }
 
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    /**
+     * 这个的port是来自连接 master 的客户端端口
+     */
     public Integer getLocalPort(){
         return socket.getLocalPort();
+    }
+
+    public Integer getMasterPort(){
+        return socket.getPort();
+    }
+    public String getMasterIp(){
+        return socket.getInetAddress().getHostAddress();
     }
 }
