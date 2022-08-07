@@ -42,7 +42,11 @@ public class Server {
             System.out.println("出错还是有客户端断开链接了");
             e.printStackTrace();
         }
+    }
 
+
+    public Integer getPort(){
+        return serverSocket.getLocalPort();
     }
 
 

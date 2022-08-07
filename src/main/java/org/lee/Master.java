@@ -1,6 +1,8 @@
 package org.lee;
 
 import org.lee.master.MasterNode;
+import org.lee.slave.router.ReceiveEntity;
+import org.lee.util.JsonUtil;
 
 import java.io.IOException;
 
@@ -13,7 +15,8 @@ public class Master {
         System.out.println("启动成功");
         while (true){
             System.out.println("服务端发送消息");
-            masterNode.sendToSlaves("master 发送的消息 啊哈哈哈哈");
+            String json = JsonUtil.toJson(new ReceiveEntity("tets_type", "test message"));
+            masterNode.sendToSlaves(json);
             Thread.sleep(3000);
         }
     }
