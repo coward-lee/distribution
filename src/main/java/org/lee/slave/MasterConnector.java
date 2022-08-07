@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class MasterWorker {
+public class SlaveReceiver {
     Connection connection;
     String ip;
     Integer port;
 
-    public MasterWorker(String ip, Integer port) throws IOException {
+    public SlaveReceiver(String ip, Integer port) throws IOException {
         this.ip = ip;
         this.port = port;
         connection = new Connection();
